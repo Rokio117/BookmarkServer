@@ -2,9 +2,10 @@ const express = require('express');
 const uuid = require('uuid');
 const logger = require('../logger');
 const bookmarks = require('../store');
-const getRouter = express.Router();
+const idRouter = express.Router();
 
-getRouter.route('/bookmarks:id').get((req, res) => {
+idRouter.route('/bookmarks:id').get((req, res) => {
+  console.log(req.params);
   const { id } = req.params;
   const bookmark = bookmarks.find(bm => bm.id == id);
   if (!bookmark) {
@@ -14,4 +15,4 @@ getRouter.route('/bookmarks:id').get((req, res) => {
   res.send(bookmark);
 });
 
-module.exports = getRouter;
+module.exports = idRouter;
