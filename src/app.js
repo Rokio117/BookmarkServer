@@ -7,6 +7,7 @@ const { NODE_ENV } = require('./config');
 const logger = require('./logger');
 const getRouter = require('../src/getBookmarks/bookmarks');
 const idRouter = require('../src/getBookmarks/bookmarksId');
+const postRouter = require('../src/PDBookmarks/postBookmarks');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(function validateBearerToken(req, res, next) {
 
 app.use(getRouter);
 app.use(idRouter);
+app.use(postRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;
