@@ -42,6 +42,7 @@ postRouter.route('/bookmarks').post((req, res) => {
   }
 
   const id = uuid();
+  console.log('id', id);
   const newBookmark = {
     id,
     title,
@@ -50,7 +51,10 @@ postRouter.route('/bookmarks').post((req, res) => {
     rating
   };
   bookmarks.push(newBookmark);
-  res.status(204).location(`http://localhost:8000/bookmarks/${id}`).end;
+  res
+    .status(204)
+    .location(`http://localhost:8000/bookmarks/${id}`)
+    .end();
 });
 
 module.exports = postRouter;
