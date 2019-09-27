@@ -5,7 +5,7 @@ const bookmarks = require('../store');
 const idRouter = express.Router();
 
 idRouter
-  .route('/bookmarks:id')
+  .route('/bookmarks/:id')
   .get((req, res) => {
     console.log(req.params);
     const { id } = req.params;
