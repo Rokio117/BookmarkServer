@@ -9,7 +9,7 @@ describe('Bookmarks Endpoints', function() {
       client: 'pg',
       connection: process.env.TEST_DB_URL
     });
-    app.set('db', db);
+    //app.set('db', db);
   });
   after('disconnect from db', () => db.destroy());
   before('clear the table', () => db('bookmarks').truncate());
