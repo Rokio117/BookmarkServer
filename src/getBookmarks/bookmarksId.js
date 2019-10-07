@@ -5,7 +5,6 @@ const bookmarks = require('../store');
 const idRouter = express.Router();
 const bookmarkService = require('../../refactor/bookmark-service');
 const knex = require('knex');
-const bodyParser = express.json();
 
 idRouter
   .route('/bookmarks/:id')
