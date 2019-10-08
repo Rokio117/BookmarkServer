@@ -30,9 +30,10 @@ idRouter
     //   logger.error(`Bookmark with id ${id} not found`);
     //   return res.status(404).send('Not Found');
     // }
-    bookmarkService.deleteBookmark(knex, id);
-    logger.info(`Bookmark with id ${id} deleted`);
-    res.status(204).end();
+    bookmarkService.deleteBookmark(knex, id).then(() => {
+      logger.info(`Bookmark with id ${id} deleted`);
+      res.status(204).end();
+    });
   });
 
 module.exports = idRouter;

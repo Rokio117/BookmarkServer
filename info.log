@@ -7,3 +7,10 @@
 {"message":"Bookmark with id 3 not found","level":"error"}
 {"message":"Bookmark with id 800 not found","level":"error"}
 {"message":"Bookmark with id 800 not found","level":"error"}
+{"message":"title is required","level":"error"}
+{"message":"Bookmark with id 5 deleted","level":"info"}
+{"message":"Bookmark with id 5 deleted","level":"info"}
+{"message":"Bookmark with id 5 deleted","level":"info"}
+{"message":"Bookmark with id 5 deleted","level":"info"}
+{"message":"Invalid url 'htt:www.tingoskraa.com' supplied","level":"error"}
+{"message":"Invalid rating 'cow' supplied","level":"error"}

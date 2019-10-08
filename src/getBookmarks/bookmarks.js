@@ -45,13 +45,15 @@ getRouter
       return res.status(400).send(`'url' must be a valid URL`);
     }
 
-    const bookmark = { id: uuid(), title, url, description, rating };
-    bookmarkService.postBookmark(req.app.get('db'), bookmark).then(bookmark => {
-      res
-        .status(201)
-        .location(`/bookmarks/${bookmark.id}`)
-        .json(serializeBookmark(bookmark));
-    });
+    const newBookmark = { id: uuid(), title, url, description, rating };
+    bookmarkService
+      .postBookmark(req.app.get('db'), newBookmark)
+      .then(bookmark => {
+        res
+          .status(201)
+          .location(`/bookmarks/${bookmark.id}`)
+          .json(serializeBookmark(bookmark));
+      });
   });
 
 module.exports = getRouter;
