@@ -19,7 +19,7 @@ describe('Bookmarks Endpoints', function() {
   before('clear the table', () => db('bookmarks').truncate());
   afterEach('cleanup', () => db('bookmarks').truncate());
 
-  describe.only(` GET /bookmarks`, () => {
+  describe(` GET /bookmarks`, () => {
     context('Given no authorization', () => {
       it(`will return 401`, () => {
         return supertest(app)
@@ -101,22 +101,28 @@ describe('Bookmarks Endpoints', function() {
         return supertest(app)
           .get(`/bookmarks/${bookMarkid}`)
           .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-          .expect(200, expectedBookmark);
+          .expect(200)
+          .expect(res => {
+            let result = res.body;
+            Object.keys(expectedBookmark).forEach(key => {
+              expect(result).to.have.property(key, expectedBookmark[key]);
+            });
+          });
       });
     });
-    context('given no bookmarks exist', () => {
-      it('will return empty array when no bookmarks exist', () => {
+    context('using wrong information', () => {
+      it('will return 404 when id is not found', () => {
         return supertest(app)
-          .get(`/bookmarks/${bookMarkid}`)
+          .get(`/bookmarks/800`)
           .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-          .expect(200, []);
+          .expect(404);
       });
     });
   });
-  describe('delete /bookmarks/:id', () => {
+  describe.only('delete /bookmarks/:id', () => {
     const bookmarkId = 3;
     context('given there are bookmarks in the db', () => {
-      beforeEach('insert bookmarks', () => {
+      before('insert bookmarks', () => {
         return db.into('bookmarks').insert(testBookmarks);
       });
       it('responds with 204 and delets the bookmark', () => {
