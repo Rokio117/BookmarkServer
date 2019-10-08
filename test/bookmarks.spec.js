@@ -7,18 +7,19 @@ const app = require('../src/app');
 describe('Bookmarks Endpoints', function() {
   const testbm = testBookmarks();
   console.log(testBookmarks());
+  let db;
   before('make knex instance', () => {
     db = knex({
       client: 'pg',
       connection: process.env.TEST_DB_URL
     });
-    //app.set('db', db);
+    app.set('db', db);
   });
   after('disconnect from db', () => db.destroy());
   before('clear the table', () => db('bookmarks').truncate());
   afterEach('cleanup', () => db('bookmarks').truncate());
 
-  describe(` GET /bookmarks`, () => {
+  describe.only(` GET /bookmarks`, () => {
     context('Given no authorization', () => {
       it(`will return 401`, () => {
         return supertest(app)
@@ -72,7 +73,13 @@ describe('Bookmarks Endpoints', function() {
         return supertest(app)
           .get('/bookmarks')
           .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
-          .expect(200, testBookmark);
+          .expect(200)
+          .expect(res => {
+            let result = res.body[0];
+            Object.keys(testBookmark).forEach(key => {
+              expect(result).to.have.property(key, testBookmark[key]);
+            });
+          });
       });
     });
   });

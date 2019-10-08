@@ -17,6 +17,11 @@ const bookmarkService = {
       .then(rows => {
         return rows[0];
       });
+  },
+  deleteBookmark(knex, id) {
+    return knex('bookmarks')
+      .where({ id })
+      .delete();
   }
 };
 

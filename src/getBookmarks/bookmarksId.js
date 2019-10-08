@@ -1,7 +1,7 @@
 const express = require('express');
 const uuid = require('uuid');
 const logger = require('../logger');
-const bookmarks = require('../store');
+
 const idRouter = express.Router();
 const bookmarkService = require('../../refactor/bookmark-service');
 const knex = require('knex');
@@ -24,12 +24,13 @@ idRouter
   .delete((req, res) => {
     console.log(req.params);
     const { id } = req.params;
-    const bookmark = bookmarks.find(bm => bm.id == id);
-    if (bookmark === -1) {
-      logger.error(`Bookmark with id ${id} not found`);
-      return res.status(404).send('Not Found');
-    }
-    bookmarks.splice(bookmark, 1);
+    const knex = req.app.get('db');
+    // const bookmark = bookmarks.find(bm => bm.id == id);
+    // if (bookmark === -1) {
+    //   logger.error(`Bookmark with id ${id} not found`);
+    //   return res.status(404).send('Not Found');
+    // }
+    bookmarkService.deleteBookmark(knex, id);
     logger.info(`Bookmark with id ${id} deleted`);
     res.status(204).end();
   });
