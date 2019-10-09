@@ -28,7 +28,7 @@ app.use(function validateBearerToken(req, res, next) {
 });
 
 app.use(getRouter);
-app.use(idRouter);
+
 app.use(postRouter);
 
 app.use(function errorHandler(error, req, res, next) {
