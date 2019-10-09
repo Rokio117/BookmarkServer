@@ -5,9 +5,10 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const logger = require('./logger');
-const getRouter = require('../src/getBookmarks/bookmarks');
-const idRouter = require('../src/getBookmarks/bookmarks');
+// const getRouter = require('../src/getBookmarks/bookmarks');
+// const idRouter = require('../src/getBookmarks/bookmarks');
 const postRouter = require('../src/PDBookmarks/postBookmarks');
+const { getRouter, idRouter } = require('../src/getBookmarks/bookmarks');
 
 const app = express();
 
