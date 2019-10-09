@@ -26,7 +26,8 @@ getRouter
       res.json(bookmarks);
     });
   })
-  .post(bodyParser, (req, res) => {
+  .post(bodyParser, (req, res, next) => {
+    console.log(req.body);
     // TODO: update to use db
     for (const field of ['title', 'url', 'rating']) {
       if (!req.body[field]) {
@@ -46,7 +47,8 @@ getRouter
       return res.status(400).send(`'url' must be a valid URL`);
     }
 
-    const newBookmark = { id: uuid(), title, url, description, rating };
+    const newBookmark = { title, url, description, rating };
+
     bookmarkService
       .postBookmark(req.app.get('db'), newBookmark)
       .then(bookmark => {
@@ -54,7 +56,8 @@ getRouter
           .status(201)
           .location(`/bookmarks/${bookmark.id}`)
           .json(serializeBookmark(bookmark));
-      });
+      })
+      .catch(next);
   });
 
 idRouter
