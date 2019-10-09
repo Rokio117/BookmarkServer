@@ -87,4 +87,4 @@ idRouter
     });
   });
 
-module.exports = getRouter;
+module.exports = { getRouter, idRouter };

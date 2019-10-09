@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 const logger = require('./logger');
 const getRouter = require('../src/getBookmarks/bookmarks');
-const idRouter = require('../src/getBookmarks/bookmarksId');
+const idRouter = require('../src/getBookmarks/bookmarks');
 const postRouter = require('../src/PDBookmarks/postBookmarks');
 
 const app = express();
@@ -28,8 +28,7 @@ app.use(function validateBearerToken(req, res, next) {
 });
 
 app.use(getRouter);
-
-app.use(postRouter);
+app.use(idRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;
