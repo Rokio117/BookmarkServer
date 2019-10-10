@@ -119,7 +119,7 @@ describe('Bookmarks Endpoints', function() {
       });
     });
   });
-  describe.only('delete /bookmarks/:id', () => {
+  describe('delete /bookmarks/:id', () => {
     const bookmarkId = 3;
     context('given there are bookmarks in the db', () => {
       before('insert bookmarks', () => {
@@ -136,6 +136,32 @@ describe('Bookmarks Endpoints', function() {
             supertest(app)
               .get(`/articles`)
               .expect(expectedResults);
+          });
+      });
+    });
+  });
+  describe.only(`PATCH /bookmarks/:id`, () => {
+    context(`Given incorrect id`, () => {
+      it(`responds with 404`, () => {
+        const bookmarkId = 8;
+
+        return supertest(app)
+          .patch(`/bookmarks/${bookmarkId}`)
+          .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+          .expect(404, { error: { message: `bookmark does not exist` } });
+      });
+    });
+    context(`Given no changes`, () => {
+      it(`responds with 400 and error message`, () => {
+        const bookmarkId = 3;
+        const body = { title: '', url: '', description: '', rating: '' };
+        return supertest(app)
+          .patch(`/bookmarks/${bookmarkId}`)
+          .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+          .expect(400, {
+            error: {
+              message: `Request body must contain either 'title, url, description, or rating.`
+            }
           });
       });
     });

@@ -62,6 +62,18 @@ getRouter
 
 idRouter
   .route('/bookmarks/:id')
+  .all((req, res, next) => {
+    bookmarkService
+      .getBookmarkById(req.app.get('db'), req.params.id)
+      .then(bookmark => {
+        if (!bookmark) {
+          return res.status(404).json({
+            error: { message: 'bookmark does not exist' }
+          });
+        }
+      })
+      .catch(next);
+  })
   .get((req, res) => {
     console.log(req.params);
     const { id } = req.params;
@@ -73,6 +85,24 @@ idRouter
       }
       res.json(bookmark);
     });
+  })
+  .patch(bodyParser, (req, res, next) => {
+    const { title, url, description, rating } = req.params;
+    const bookmarkToUpdate = { title, url, description, rating };
+    const numberOfValues = Object.values(bookmarkToUpdate).filter(Boolean)
+      .length;
+    if (numberOfValues === 0) {
+      return res.status(400).json({
+        error: {
+          message: `Request body must contain either 'title, url, description, or rating.`
+        }
+      });
+    }
+    bookmarkService.updatebookmark(
+      req.app.get('db'),
+      req.params.id,
+      bookmarkToUpdate
+    );
   })
 
   .delete((req, res) => {
