@@ -155,9 +155,17 @@ describe('Bookmarks Endpoints', function() {
       it(`responds with 400 and error message`, () => {
         const bookmarkId = 3;
         const body = { title: '', url: '', description: '', rating: '' };
+        beforeEach('insert articles', () => {
+          return db.into('bookmarks').insert(testBookmarks());
+        });
+        const expectedArticle = {
+          ...testBookmarks()[bookmarkId - 1],
+          ...bookmarkId
+        };
         return supertest(app)
           .patch(`/bookmarks/${bookmarkId}`)
           .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+          .send(body)
           .expect(400, {
             error: {
               message: `Request body must contain either 'title, url, description, or rating.`

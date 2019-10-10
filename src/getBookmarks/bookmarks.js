@@ -98,11 +98,9 @@ idRouter
         }
       });
     }
-    bookmarkService.updatebookmark(
-      req.app.get('db'),
-      req.params.id,
-      bookmarkToUpdate
-    );
+    bookmarkService
+      .updatebookmark(req.app.get('db'), req.params.id, bookmarkToUpdate)
+      .catch(next);
   })
 
   .delete((req, res) => {
