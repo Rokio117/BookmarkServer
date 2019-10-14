@@ -14,3 +14,13 @@
 {"message":"Bookmark with id 5 deleted","level":"info"}
 {"message":"Invalid url 'htt:www.tingoskraa.com' supplied","level":"error"}
 {"message":"Invalid rating 'cow' supplied","level":"error"}
+{"message":"Invalid rating '5' supplied","level":"error"}
+{"message":"Invalid rating '4' supplied","level":"error"}
+{"message":"Invalid rating '4' supplied","level":"error"}
+{"message":"Bookmark with id 7 deleted","level":"info"}
+{"message":"Bookmark with id 8 deleted","level":"info"}
+{"message":"Bookmark with id 9 deleted","level":"info"}
+{"message":"Invalid rating 'cow' supplied","level":"error"}
+{"message":"Bookmark with id 13 deleted","level":"info"}
+{"message":"Bookmark with id 14 deleted","level":"info"}
+{"message":"Bookmark with id 2 deleted","level":"info"}

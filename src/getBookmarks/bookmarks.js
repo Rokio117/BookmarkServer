@@ -35,6 +35,7 @@ getRouter
         return res.status(400).send(`'${field}' is required`);
       }
     }
+
     const { title, url, description, rating } = req.body;
 
     if (!Number.isInteger(rating) || rating < 0 || rating > 5) {
@@ -70,7 +71,7 @@ idRouter
           return res.status(404).json({
             error: { message: 'bookmark does not exist' }
           });
-        }
+        } else next();
       })
       .catch(next);
   })
@@ -87,7 +88,7 @@ idRouter
     });
   })
   .patch(bodyParser, (req, res, next) => {
-    const { title, url, description, rating } = req.params;
+    const { title, url, description, rating } = req.body;
     const bookmarkToUpdate = { title, url, description, rating };
     const numberOfValues = Object.values(bookmarkToUpdate).filter(Boolean)
       .length;
@@ -99,8 +100,11 @@ idRouter
       });
     }
     bookmarkService
-      .updatebookmark(req.app.get('db'), req.params.id, bookmarkToUpdate)
-      .catch(next);
+      .patchBookmark(req.app.get('db'), req.params.id, bookmarkToUpdate)
+      .catch(next)
+      .then(value => {
+        res.json(value);
+      });
   })
 
   .delete((req, res) => {

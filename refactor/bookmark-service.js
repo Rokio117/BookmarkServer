@@ -26,7 +26,11 @@ const bookmarkService = {
   patchBookmark(knex, id, bookmark) {
     return knex('bookmarks')
       .where({ id })
-      .update(bookmark);
+      .update(bookmark)
+      .returning('*')
+      .then(rows => {
+        return rows[0];
+      });
   }
 };
 
